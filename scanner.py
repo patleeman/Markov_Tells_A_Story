@@ -1,4 +1,6 @@
 """
+This module is used to scan files into a nth order markov chain.
+
 The schema consists of a tuple containing the prior n words to an index 0 word.
 
 storage schema = {

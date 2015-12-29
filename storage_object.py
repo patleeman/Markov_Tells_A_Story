@@ -1,21 +1,16 @@
-import json
 
 class MarkovStorage(object):
     def __init__(self, file_path=None):
         self.data = {}
         self.file_path = file_path
 
-    def save(self, file_path=None):
-        if not file_path:
-            self.file_path = file_path
+    def save(self):
         with open(self.file_path, 'w+') as f:
-            f.write(json.dumps(self.data))
+            f.write(str(self.data))
 
-    def load(self, file_path=None):
-        if not file_path:
-            self.file_path = file_path
+    def load(self):
         with open(self.file_path) as f:
-            self.data = json.loads(f.read())
+            self.data = eval(f.read())
 
     def add(self, markov_tuple, word):
         try:
