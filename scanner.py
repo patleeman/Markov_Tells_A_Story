@@ -8,9 +8,16 @@ storage schema = {
     (word(n-m), word(n-2), word(n-1)): [word(n)],
 }
 """
-def scan(storage_object, data_file, markov_order=2):
-    with open(data_file) as f:
-        text = f.read()
+def scan(storage_object, data_file, markov_order):
+    try:
+        with open(data_file, encoding='utf-8') as f:
+            text = f.read()
+    except UnicodeDecodeError:
+        try:
+            with open(data_file, encoding='ISO-8859-1') as f:
+                text = f.read()
+        except UnicodeDecodeError as e:
+            raise UnicodeDecodeError("Can't decode file {}".format(e))
 
     marked_text = replace_punctuation(text)
 
