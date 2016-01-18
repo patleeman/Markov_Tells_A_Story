@@ -12,3 +12,4 @@ MARKOV_DATABASE_FILE_PATH = os.path.join(BASE_PATH, 'database', 'markov_db.sqlit
 MARKOV_ORDER = 3
 
 DB_TRANSACTION_INTERVAL = 25
+

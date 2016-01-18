@@ -9,16 +9,7 @@ storage schema = {
 }
 """
 def scan(storage_object, data_file, markov_order):
-    try:
-        with open(data_file, encoding='utf-8') as f:
-            text = f.read()
-    except UnicodeDecodeError:
-        try:
-            with open(data_file, encoding='ISO-8859-1') as f:
-                text = f.read()
-        except UnicodeDecodeError as e:
-            raise UnicodeDecodeError("Can't decode file {}".format(e))
-
+    text = open_gutenberg(data_file)
     marked_text = replace_punctuation(text)
 
     sentences = marked_text.split("<EOS>")
@@ -41,6 +32,19 @@ def scan(storage_object, data_file, markov_order):
             storage_object.add(markov_tuple, convert_punctuation(current_word))
 
     return storage_object
+
+def open_gutenberg(data_file):
+    try:
+        with open(data_file, encoding='utf-8') as f:
+            text = f.read()
+            return text
+    except UnicodeDecodeError:
+        try:
+            with open(data_file, encoding='ISO-8859-1') as f:
+                text = f.read()
+                return text
+        except UnicodeDecodeError as e:
+            raise UnicodeDecodeError("Can't decode file {}".format(e))
 
 
 def convert_punctuation(text):

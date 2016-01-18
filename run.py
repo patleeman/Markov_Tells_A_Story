@@ -4,9 +4,10 @@ from tqdm import tqdm
 import scanner
 import storage_object
 from settings import *
-
+import time
 
 def scan_folder_contents(folder_path):
+    start = time.time()
     folder_contents = os.listdir(folder_path)
     # Initialize database:
     storage = storage_object.MarkovStorage(markov_order=MARKOV_ORDER, database_path=MARKOV_DATABASE_FILE_PATH)
@@ -21,7 +22,8 @@ def scan_folder_contents(folder_path):
     if storage.data is not None:
         storage.save()
 
-    print("Complete")
+    end = time.time() - start
+    print("Complete {}".format(end))
     return
 
 if __name__ == '__main__':
